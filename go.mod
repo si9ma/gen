@@ -3,6 +3,7 @@ module github.com/smallnest/gen
 go 1.16
 
 require (
+	github.com/Masterminds/sprig/v3 v3.2.3
 	github.com/bxcodec/faker/v3 v3.5.0
 	github.com/davecgh/go-spew v1.1.1
 	github.com/denisenkom/go-mssqldb v0.9.0
@@ -21,6 +22,5 @@ require (
 	github.com/rogpeppe/go-internal v1.6.2 // indirect
 	github.com/serenize/snaker v0.0.0-20171204205717-a683aaf2d516
 	github.com/sirupsen/logrus v1.7.0 // indirect
-	golang.org/x/crypto v0.0.0-20201012173705-84dcc777aaee // indirect
-	golang.org/x/tools v0.0.0-20201224043029-2b0845dc783e
+	golang.org/x/tools v0.1.12
 )

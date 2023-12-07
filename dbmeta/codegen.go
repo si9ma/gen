@@ -8,6 +8,7 @@ import (
 	"path"
 	"time"
 
+	"github.com/Masterminds/sprig/v3"
 	"github.com/smallnest/gen/utils"
 
 	"go/format"
@@ -34,27 +35,26 @@ type GenTemplate struct {
 // TemplateLoader loader function to retrieve a template contents
 type TemplateLoader func(filename string) (tpl *GenTemplate, err error)
 
-var replaceFuncMap = template.FuncMap{
-	"singular":           inflection.Singular,
-	"pluralize":          inflection.Plural,
-	"title":              strings.Title,
-	"toLower":            strings.ToLower,
-	"toUpper":            strings.ToUpper,
-	"toLowerCamelCase":   camelToLowerCamel,
-	"toUpperCamelCase":   camelToUpperCamel,
-	"toSnakeCase":        snaker.CamelToSnake,
-	"StringsJoin":        strings.Join,
-	"replace":            replace,
-	"stringifyFirstChar": stringifyFirstChar,
-	"FmtFieldName":       FmtFieldName,
-}
-
 func replace(input, from, to string) string {
 	return strings.Replace(input, from, to, -1)
 }
 
 // Replace takes a template based name format and will render a name using it
 func Replace(nameFormat, name string) string {
+	replaceFuncMap := sprig.TxtFuncMap()
+	replaceFuncMap["singular"] = inflection.Singular
+	replaceFuncMap["pluralize"] = inflection.Plural
+	replaceFuncMap["title"] = strings.Title
+	replaceFuncMap["toLower"] = strings.ToLower
+	replaceFuncMap["toUpper"] = strings.ToUpper
+	replaceFuncMap["toLowerCamelCase"] = camelToLowerCamel
+	replaceFuncMap["toUpperCamelCase"] = camelToUpperCamel
+	replaceFuncMap["toSnakeCase"] = snaker.CamelToSnake
+	replaceFuncMap["StringsJoin"] = strings.Join
+	replaceFuncMap["replace"] = replace
+	replaceFuncMap["stringifyFirstChar"] = stringifyFirstChar
+	replaceFuncMap["FmtFieldName"] = FmtFieldName
+
 	var tpl bytes.Buffer
 	//fmt.Printf("Replace: %s\n",nameFormat)
 	t := template.Must(template.New("t1").Funcs(replaceFuncMap).Parse(nameFormat))
