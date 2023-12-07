@@ -126,6 +126,10 @@ func (c *Config) GetTemplate(genTemplate *GenTemplate) (*template.Template, erro
 		"insertFragment":             c.insertFragment,
 	}
 
+	for name, fun := range sprig.TxtFuncMap() {
+		funcMap[name] = fun
+	}
+
 	baseName := filepath.Base(genTemplate.Name)
 
 	tmpl, err := template.New(baseName).Option("missingkey=error").Funcs(funcMap).Parse(genTemplate.Content)
