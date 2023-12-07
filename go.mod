@@ -1,4 +1,4 @@
-module github.com/smallnest/gen
+module github.com/si9ma/gen
 
 go 1.16
 

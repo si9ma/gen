@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/Masterminds/sprig/v3"
-	"github.com/smallnest/gen/utils"
+	"github.com/si9ma/gen/utils"
 
 	"go/format"
 	"io/ioutil"
