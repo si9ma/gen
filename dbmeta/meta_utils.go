@@ -211,20 +211,20 @@ func cleanupDefault(val string) string {
 		return val
 	}
 
-	if strings.HasPrefix(val, "(") && strings.HasSuffix(val, ")") {
-		return cleanupDefault(val[1 : len(val)-1])
-	}
+	// if strings.HasPrefix(val, "(") && strings.HasSuffix(val, ")") {
+	// 	return cleanupDefault(val[1 : len(val)-1])
+	// }
 
 	if strings.Index(val, "nextval(") == 0 && strings.Index(val, "::regclass)") > -1 {
 		return ""
 	}
 
-	if strings.LastIndex(val, "::") > -1 {
-		return cleanupDefault(val[0:strings.LastIndex(val, "::")])
-	}
-	if strings.HasPrefix(val, "'") && strings.HasSuffix(val, "'") {
-		return cleanupDefault(val[1 : len(val)-1])
-	}
+	// if strings.LastIndex(val, "::") > -1 {
+	// 	return cleanupDefault(val[0:strings.LastIndex(val, "::")])
+	// }
+	// if strings.HasPrefix(val, "'") && strings.HasSuffix(val, "'") {
+	// 	return cleanupDefault(val[1 : len(val)-1])
+	// }
 	// 'G'::mpaa_rating
 	// ('now'::text)::date
 

@@ -126,13 +126,14 @@ func (c *Config) GetTemplate(genTemplate *GenTemplate) (*template.Template, erro
 		"insertFragment":             c.insertFragment,
 	}
 
-	for name, fun := range sprig.TxtFuncMap() {
-		funcMap[name] = fun
+	fm := sprig.TxtFuncMap()
+	for name, fun := range funcMap {
+		fm[name] = fun
 	}
 
 	baseName := filepath.Base(genTemplate.Name)
 
-	tmpl, err := template.New(baseName).Option("missingkey=error").Funcs(funcMap).Parse(genTemplate.Content)
+	tmpl, err := template.New(baseName).Option("missingkey=error").Funcs(fm).Parse(genTemplate.Content)
 	if err != nil {
 		return nil, err
 	}
@@ -619,7 +620,7 @@ func (c *Config) format(genTemplate *GenTemplate, content []byte, outputFile str
 	if extension == ".go" {
 		formattedSource, err := format.Source([]byte(content))
 		if err != nil {
-			return nil, fmt.Errorf("error in formatting template: %s outputfile: %s source: %s", genTemplate.Name, outputFile, err.Error())
+			return nil, fmt.Errorf("error in formatting template: %s outputfile: %s source: %s, content: %s", genTemplate.Name, outputFile, err.Error(), content)
 		}
 
 		fileContents := NormalizeNewlines(formattedSource)
